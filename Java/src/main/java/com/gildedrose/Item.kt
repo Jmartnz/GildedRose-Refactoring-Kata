@@ -15,60 +15,25 @@ open class BaseItem(
 ) : Item(name, sellIn, quality) {
 
     fun update() {
+        age()
         update1()
-        update2()
         update3()
     }
 
-    private fun update3() {
-        if (sellIn < 0) {
-            if (name != "Aged Brie") {
-                if (name != "Backstage passes to a TAFKAL80ETC concert") {
-                    if (quality > 0) {
-                        if (name != "Sulfuras, Hand of Ragnaros") {
-                            this.quality = quality - 1
-                        }
-                    }
-                } else {
-                    this.quality = quality - quality
-                }
-            } else {
-                if (quality < 50) {
-                    this.quality = quality + 1
-                }
-            }
-        }
-    }
-
-    private fun update2() {
-        if (name != "Sulfuras, Hand of Ragnaros") {
-            this.sellIn = sellIn - 1
-        }
+    protected open fun age() {
+        sellIn -= 1
     }
 
     protected open fun update1() {
-        if (name != "Aged Brie"
-                && name != "Backstage passes to a TAFKAL80ETC concert") {
+        if (quality > 0) {
+            quality -= 1
+        }
+    }
+
+    protected open fun update3() {
+        if (sellIn < 0) {
             if (quality > 0) {
-                if (name != "Sulfuras, Hand of Ragnaros") {
-                    this.quality = quality - 1
-                }
-            }
-        } else {
-            if (quality < 50) {
-                this.quality = quality + 1
-                if (name == "Backstage passes to a TAFKAL80ETC concert") {
-                    if (sellIn < 11) {
-                        if (quality < 50) {
-                            this.quality = quality + 1
-                        }
-                    }
-                    if (sellIn < 6) {
-                        if (quality < 50) {
-                            this.quality = quality + 1
-                        }
-                    }
-                }
+                quality -= 1
             }
         }
     }
@@ -80,9 +45,21 @@ class Brie(
     quality: Int
 ) : BaseItem(name, sellIn, quality) {
 
+    override fun age() {
+        sellIn -= 1
+    }
+
     override fun update1() {
         if (quality < 50) {
-            this.quality = quality + 1
+            quality += 1
+        }
+    }
+
+    override fun update3() {
+        if (sellIn < 0) {
+            if (quality < 50) {
+                quality += 1
+            }
         }
     }
 }
@@ -93,19 +70,29 @@ class Pass(
     quality: Int
 ) : BaseItem(name, sellIn, quality) {
 
+    override fun age() {
+        sellIn -= 1
+    }
+
     override fun update1() {
         if (quality < 50) {
-            this.quality = quality + 1
+            quality += 1
             if (sellIn < 11) {
                 if (quality < 50) {
-                    this.quality = quality + 1
+                    quality += 1
                 }
             }
             if (sellIn < 6) {
                 if (quality < 50) {
-                    this.quality = quality + 1
+                    quality += 1
                 }
             }
+        }
+    }
+
+    override fun update3() {
+        if (sellIn < 0) {
+            quality = 0
         }
     }
 }
@@ -116,5 +103,7 @@ class Sulfuras(
     quality: Int
 ) : BaseItem(name, sellIn, quality) {
 
+    override fun age() {}
     override fun update1() {}
+    override fun update3() {}
 }

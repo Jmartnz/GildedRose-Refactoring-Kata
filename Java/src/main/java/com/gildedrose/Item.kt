@@ -16,21 +16,18 @@ open class BaseItem(
 
     fun update() {
         age()
-        update1()
-        update3()
+        degrade()
     }
 
     protected open fun age() {
         sellIn -= 1
     }
 
-    protected open fun update1() {
+    protected open fun degrade() {
         if (quality > 0) {
             quality -= 1
         }
-    }
 
-    protected open fun update3() {
         if (sellIn < 0) {
             if (quality > 0) {
                 quality -= 1
@@ -49,13 +46,11 @@ class Brie(
         sellIn -= 1
     }
 
-    override fun update1() {
+    override fun degrade() {
         if (quality < 50) {
             quality += 1
         }
-    }
 
-    override fun update3() {
         if (sellIn < 0) {
             if (quality < 50) {
                 quality += 1
@@ -74,7 +69,7 @@ class Pass(
         sellIn -= 1
     }
 
-    override fun update1() {
+    override fun degrade() {
         if (quality < 50) {
             quality += 1
             if (sellIn < 11) {
@@ -82,15 +77,14 @@ class Pass(
                     quality += 1
                 }
             }
+
             if (sellIn < 6) {
                 if (quality < 50) {
                     quality += 1
                 }
             }
         }
-    }
 
-    override fun update3() {
         if (sellIn < 0) {
             quality = 0
         }
@@ -104,6 +98,5 @@ class Sulfuras(
 ) : BaseItem(name, sellIn, quality) {
 
     override fun age() {}
-    override fun update1() {}
-    override fun update3() {}
+    override fun degrade() {}
 }

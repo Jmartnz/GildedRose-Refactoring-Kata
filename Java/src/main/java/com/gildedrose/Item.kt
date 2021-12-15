@@ -25,20 +25,14 @@ open class BaseItem(
     }
 
     protected open fun degrade() {
-        if (quality > 0) {
-            quality -= 1
-        }
-
-        if (sellIn < 0) {
-            if (quality > 0) {
-                quality -= 1
-            }
-        }
+        quality -= if (sellIn < 0) 2 else 1
     }
 
     protected open fun saturate() {
-        if (quality < 0) quality = 0
-        if (quality > 50) quality = 50
+        when {
+            quality < 0 -> quality = 0
+            quality > 50 -> quality = 50
+        }
     }
 }
 
@@ -53,15 +47,7 @@ class Brie(
     }
 
     override fun degrade() {
-        if (quality < 50) {
-            quality += 1
-        }
-
-        if (sellIn < 0) {
-            if (quality < 50) {
-                quality += 1
-            }
-        }
+        quality += if (sellIn < 0) 2 else 1
     }
 }
 
@@ -76,23 +62,11 @@ class Pass(
     }
 
     override fun degrade() {
-        if (quality < 50) {
-            quality += 1
-            if (sellIn < 11) {
-                if (quality < 50) {
-                    quality += 1
-                }
-            }
-
-            if (sellIn < 6) {
-                if (quality < 50) {
-                    quality += 1
-                }
-            }
-        }
-
-        if (sellIn < 0) {
-            quality = 0
+        quality = when {
+            sellIn < 0 -> 0
+            sellIn < 5 -> quality + 3
+            sellIn < 10 -> quality + 2
+            else -> quality + 1
         }
     }
 }

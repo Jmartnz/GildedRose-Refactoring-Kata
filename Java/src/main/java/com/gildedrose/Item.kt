@@ -16,8 +16,7 @@ open class BaseItem(
 
     fun update() {
         sellIn -= aging()
-        quality -= degradation(sellIn, quality)
-        saturate()
+        quality = saturation(quality - degradation(sellIn, quality))
     }
 
     protected open fun aging() = 1
@@ -27,11 +26,10 @@ open class BaseItem(
         else -> 1
     }
 
-    protected open fun saturate() {
-        when {
-            quality < 0 -> quality = 0
-            quality > 50 -> quality = 50
-        }
+    protected open fun saturation(quality: Int) = when {
+            quality < 0 -> 0
+            quality > 50 -> 50
+            else -> quality
     }
 }
 
@@ -71,5 +69,5 @@ class Sulfuras(
 
     override fun aging() = 0
     override fun degradation(sellIn: Int, quality: Int) = 0
-    override fun saturate() {}
+    override fun saturation(quality: Int) = quality
 }

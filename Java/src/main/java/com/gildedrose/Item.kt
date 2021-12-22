@@ -8,24 +8,45 @@ open class Item(
     override fun toString(): String = "$name, $sellIn, $quality"
 }
 
-class BaseItem(
-    name: String,
-    sellIn: Int = 0,
-    quality: Int = 0,
-    private val aging: () -> Int = { 1 },
-    private val degradation: (Int, Int) -> Int = { _, _ ->
+object Aging {
+    val none: () -> Int = { 0 }
+    val standard: () -> Int = { 1 }
+}
+
+object Degradation {
+    val none: (Int, Int) -> Int = { _, _ -> 0 }
+    val standard: (Int, Int) -> Int = { sellIn, _ ->
         when {
             sellIn < 0 -> 2
             else -> 1
         }
-    },
-    private val saturation: (Int) -> Int = {
+    }
+    val reverse: (Int, Int) -> Int = { sellIn, _ ->
+        when {
+            sellIn < 0 -> -2
+            else -> -1
+        }
+    }
+}
+
+object Saturation {
+    val none: (Int) -> Int = { it }
+    val standard: (Int) -> Int = {
         when {
             it < 0 -> 0
             it > 50 -> 50
             else -> it
         }
     }
+}
+
+class BaseItem(
+    name: String,
+    sellIn: Int = 0,
+    quality: Int = 0,
+    private val aging: () -> Int = Aging.standard,
+    private val degradation: (Int, Int) -> Int = Degradation.standard,
+    private val saturation: (Int) -> Int = Saturation.standard
 ) : Item(name, sellIn, quality) {
     fun update() {
         sellIn -= aging()
@@ -41,12 +62,7 @@ fun brie(
     name,
     sellIn,
     quality,
-    degradation = { _, _ ->
-        when {
-            sellIn < 0 -> -2
-            else -> -1
-        }
-    }
+    degradation = Degradation.reverse
 )
 
 fun pass(
@@ -75,7 +91,7 @@ fun sulfuras(
     name,
     sellIn,
     quality,
-    aging = { 0 },
-    degradation = { _, _ -> 0 },
-    saturation = { it }
+    aging = Aging.none,
+    degradation = Degradation.none,
+    saturation = Saturation.none
 )

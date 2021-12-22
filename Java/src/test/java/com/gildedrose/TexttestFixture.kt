@@ -13,13 +13,13 @@ class TexttestFixture {
         out.println("OMGHAI!")
         val items: Array<Item> = arrayOf(
             BaseItem("+5 Dexterity Vest", 10, 20),  //
-            Brie("Aged Brie", 2, 0),  //
+            brie("Aged Brie", 2, 0),  //
             BaseItem("Elixir of the Mongoose", 5, 7),  //
-            Sulfuras("Sulfuras, Hand of Ragnaros", 0, 80),  //
-            Sulfuras("Sulfuras, Hand of Ragnaros", -1, 80),
-            Pass("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-            Pass("Backstage passes to a TAFKAL80ETC concert", 10, 49),
-            Pass("Backstage passes to a TAFKAL80ETC concert", 5, 49),  // this conjured item does not work properly yet
+            sulfuras("Sulfuras, Hand of Ragnaros", 0, 80),  //
+            sulfuras("Sulfuras, Hand of Ragnaros", -1, 80),
+            pass("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+            pass("Backstage passes to a TAFKAL80ETC concert", 10, 49),
+            pass("Backstage passes to a TAFKAL80ETC concert", 5, 49),  // this conjured item does not work properly yet
             BaseItem("Conjured Mana Cake", 3, 6))
         val app = GildedRose(items)
         val days = 2

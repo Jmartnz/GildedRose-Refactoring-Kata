@@ -8,7 +8,7 @@ open class Item(
     override fun toString(): String = "$name, $sellIn, $quality"
 }
 
-open class BaseItem(
+class BaseItem(
     name: String,
     sellIn: Int = 0,
     quality: Int = 0,
@@ -33,11 +33,11 @@ open class BaseItem(
     }
 }
 
-class Brie(
+fun brie(
     name: String,
     sellIn: Int,
     quality: Int
-) : BaseItem(
+) = BaseItem(
     name,
     sellIn,
     quality,
@@ -49,11 +49,11 @@ class Brie(
     }
 )
 
-class Pass(
+fun pass(
     name: String,
     sellIn: Int,
     quality: Int
-) : BaseItem(
+) = BaseItem(
     name,
     sellIn,
     quality,
@@ -67,11 +67,11 @@ class Pass(
     }
 )
 
-class Sulfuras(
+fun sulfuras(
     name: String,
     sellIn: Int,
     quality: Int
-) : BaseItem(
+) = BaseItem(
     name,
     sellIn,
     quality,

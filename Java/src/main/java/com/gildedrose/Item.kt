@@ -95,3 +95,16 @@ fun sulfuras(
     degradation = Degradation.none,
     saturation = Saturation.none
 )
+
+fun conjured(
+    name: String,
+    sellIn: Int,
+    quality: Int
+): BaseItem {
+    return BaseItem(name, sellIn, quality, degradation = { currentSellIn: Int, _: Int ->
+        when {
+            currentSellIn < 0 -> 4
+            else -> 2
+        }
+    })
+}
